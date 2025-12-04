@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:movie_catalog/movie/model.dart';
 
 class MovieDetailsPage extends StatelessWidget {
-  const MovieDetailsPage({super.key});
+  final Movie movie;
+
+  const MovieDetailsPage({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Detalhes')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context, 'a');
-        },
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +19,7 @@ class MovieDetailsPage extends StatelessWidget {
               width: double.infinity,
               child: Image.network(
                 fit: BoxFit.cover,
-                'https://lumiere-a.akamaihd.net/v1/images/image_e4f7582e.jpeg?region=0,0,540,810',
+                movie.coverUrl!,
               ),
             ),
             Padding(
@@ -31,7 +29,7 @@ class MovieDetailsPage extends StatelessWidget {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text('Titulo'), Text('Subtitulo')],
+                    children: [Text(movie.title), Text(movie.subititle!)],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,9 +56,7 @@ class MovieDetailsPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    'Enim Lorem dolore dolore ipsum non. Lorem excepteur tempor ullamco incididunt quis minim dolor nulla excepteur id sint deserunt occaecat. Do ipsum fugiat officia ex eu. Quis ad sunt elit et nulla.\nNon do exercitation dolore sint velit proident dolor commodo fugiat mollit. Ut id anim cupidatat et nostrud magna occaecat quis incididunt commodo duis ex. Nostrud ut voluptate cillum labore aute fugiat sit ex quis velit. Excepteur proident ut nostrud aute elit tempor do reprehenderit dolore reprehenderit occaecat. Enim magna mollit ut nisi voluptate magna in consequat.\nElit adipisicing non voluptate in tempor aute aliqua ea officia quis aliquip. Velit amet est ut esse reprehenderit ex elit adipisicing sint eiusmod. Sunt laborum aute eu occaecat commodo reprehenderit culpa ea in Lorem eu laborum laboris veniam. Pariatur minim ad dolor consequat dolor. Ullamco nisi consectetur commodo non anim minim labore incididunt eiusmod proident. Ipsum qui aliqua ut est. Nostrud enim et in exercitation duis laborum duis est ex elit non nulla id.',
-                  ),
+                  Text(movie.description!),
                 ],
               ),
             ),

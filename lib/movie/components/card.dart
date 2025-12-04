@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_catalog/movie/model.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({super.key});
+  final Movie movie;
+
+  const MovieCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,7 @@ class MovieCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(35),
-            child: Image.network(
-              fit: BoxFit.cover,
-              'https://lumiere-a.akamaihd.net/v1/images/image_e4f7582e.jpeg?region=0,0,540,810',
-            ),
+            child: Image.network(fit: BoxFit.cover, movie.coverUrl!),
           ),
           Positioned(
             left: 0,
@@ -44,11 +44,11 @@ class MovieCard extends StatelessWidget {
                   child: Container(
                     color: Colors.black.withValues(alpha: .6),
                     padding: EdgeInsets.all(16),
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Vingadores Vingadores Vingadores v Vingadores',
+                          movie.title,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
@@ -58,8 +58,8 @@ class MovieCard extends StatelessWidget {
                         ),
                         SizedBox(height: 6),
                         Text(
-                          'Guerra do Infinito Guerra Guerra',
-                          maxLines: 3,
+                          movie.subititle!,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_catalog/movie/page/catalog.dart';
+import 'package:movie_catalog/movie/providers/current_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+late final SharedPreferences sharedPreferences;
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const App());
+  sharedPreferences = await SharedPreferences.getInstance();
+
+  runApp(ProviderScope(child: const App()));
 }
 
 class App extends StatelessWidget {
@@ -12,15 +19,18 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: false,
-        /* colorScheme: ColorScheme.light(
-          primary: Colors.black,
-          secondary: Colors.black,
-        ), */
-      ),
-      home: MovieCatalogPage(),
+    return Consumer(
+      builder: (context, ref, _) {
+        return MaterialApp(
+          theme: ThemeData(
+            useMaterial3: false,
+            colorScheme: ref.watch(currentThemeProvider)
+                ? ColorScheme.light()
+                : ColorScheme.dark(),
+          ),
+          home: MovieCatalogPage(),
+        );
+      },
     );
   }
 }

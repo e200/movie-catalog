@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_catalog/movie/components/list.dart';
 import 'package:movie_catalog/movie/model.dart';
+import 'package:movie_catalog/movie/providers/current_theme.dart';
 import 'package:movie_catalog/movie/repository.dart';
 
-class MovieCatalogPage extends StatefulWidget {
+class MovieCatalogPage extends ConsumerStatefulWidget {
   const MovieCatalogPage({super.key});
 
   @override
-  State<MovieCatalogPage> createState() => _MovieCatalogPageState();
+  ConsumerState<MovieCatalogPage> createState() => _MovieCatalogPageState();
 }
 
-class _MovieCatalogPageState extends State<MovieCatalogPage> {
+class _MovieCatalogPageState extends ConsumerState<MovieCatalogPage> {
   Map<String, List<Movie>>? moviesByGenre;
 
   @override
@@ -27,6 +29,12 @@ class _MovieCatalogPageState extends State<MovieCatalogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ref.read(currentThemeProvider.notifier).toggleTheme();
+        },
+        child: Icon(Icons.abc),
+      ),
       appBar: AppBar(title: const Text('Movie Catalog')),
       body: Builder(
         builder: (context) {

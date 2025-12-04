@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_catalog/movie/model.dart';
 
@@ -27,7 +28,10 @@ class MovieCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(35),
-            child: Image.network(fit: BoxFit.cover, movie.coverUrl!),
+            child: CachedNetworkImage(
+              fit: BoxFit.cover,
+              imageUrl: movie.coverUrl!,
+            ),
           ),
           Positioned(
             left: 0,

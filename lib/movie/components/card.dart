@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_catalog/movie/model.dart';
+import 'package:movie_catalog/movie/providers/favourite_movies.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -78,9 +80,18 @@ class MovieCard extends StatelessWidget {
                 Positioned(
                   right: 15,
                   top: -25,
-                  child: FloatingActionButton.small(
-                    onPressed: () {},
-                    child: Icon(Icons.play_arrow),
+                  child: Consumer(
+                    builder: (context, ref, _) {
+                      return FloatingActionButton.small(
+                        onPressed: () {
+                          ref.read(favouriteMoviesProvider.notifier).state = [
+                            ...ref.read(favouriteMoviesProvider.notifier).state,
+                            movie,
+                          ];
+                        },
+                        child: Icon(Icons.play_arrow),
+                      );
+                    },
                   ),
                 ),
               ],

@@ -30,6 +30,11 @@ class _MovieCatalogPageState extends ConsumerState<MovieCatalogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: [ListTile(title: Text('Favoutires'), onTap: () {})],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ref.read(themeModeProvider.notifier).toggleTheme();

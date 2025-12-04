@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_catalog/movie/model.dart';
+import 'package:movie_catalog/movie/providers/favourite_movies.dart';
 
-class MovieDetailsPage extends StatelessWidget {
+class MovieDetailsPage extends ConsumerWidget {
   final Movie movie;
 
   const MovieDetailsPage({super.key, required this.movie});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Scaffold(
       appBar: AppBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final movies = ref.read(favouriteMoviesProvider.notifier).state;
+
+          if (movies.contains(movie)) {
+            ref.read(favouriteMoviesProvider.notifier).state = [
+              ...movies.where((element) => element.id != movie.id),
+            ];
+          } else {
+            ref.read(favouriteMoviesProvider.notifier).state = [
+              ...movies,
+              movie,
+            ];
+          }
+        },
+        child: Icon(Icons.favorite),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,10 +36,7 @@ class MovieDetailsPage extends StatelessWidget {
             SizedBox(
               height: 500,
               width: double.infinity,
-              child: Image.network(
-                fit: BoxFit.cover,
-                movie.coverUrl!,
-              ),
+              child: Image.network(fit: BoxFit.cover, movie.coverUrl!),
             ),
             Padding(
               padding: const EdgeInsets.all(16),

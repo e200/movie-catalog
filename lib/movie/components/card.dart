@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_catalog/movie/model.dart';
-import 'package:movie_catalog/movie/providers/favourite_movies.dart';
+import 'package:movie_catalog/movie/page/favourites.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -32,7 +32,7 @@ class MovieCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(35),
             child: CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl: movie.coverUrl!,
+              imageUrl: movie.coverUrl ?? '',
             ),
           ),
           Positioned(
@@ -64,7 +64,7 @@ class MovieCard extends StatelessWidget {
                         ),
                         SizedBox(height: 6),
                         Text(
-                          movie.subititle!,
+                          movie.subititle ?? 'No title',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -84,10 +84,14 @@ class MovieCard extends StatelessWidget {
                     builder: (context, ref, _) {
                       return FloatingActionButton.small(
                         onPressed: () {
-                          ref.read(favouriteMoviesProvider.notifier).state = [
-                            ...ref.read(favouriteMoviesProvider.notifier).state,
-                            movie,
-                          ];
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return FavouriteMoviesPage();
+                              },
+                            ),
+                          );
                         },
                         child: Icon(Icons.play_arrow),
                       );

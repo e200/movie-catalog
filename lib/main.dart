@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:movie_catalog/components/movie/list.dart';
+import 'package:movie_catalog/movie/page/catalog.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const App());
 }
 
@@ -18,22 +20,7 @@ class App extends StatelessWidget {
           secondary: Colors.black,
         ), */
       ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Movie Catalog')),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 16),
-            child: Wrap(
-              runSpacing: 15,
-              children: [
-                MovieList(title: 'Most tranding'),
-                MovieList(title: 'Best Choices'),
-                MovieList(title: 'Billionaire Romance'),
-              ],
-            ),
-          ),
-        ),
-      ),
+      home: MovieCatalogPage(),
     );
   }
 }

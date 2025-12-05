@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_catalog/movie/components/card.dart';
-import 'package:movie_catalog/movie/model.dart';
-import 'package:movie_catalog/movie/providers/favourite_movies.dart';
+import 'package:movie_catalog/movie/view/components/card.dart';
+import 'package:movie_catalog/movie/model/movie.dart';
+import 'package:movie_catalog/movie/controllers/favourite_movies.dart';
 
 class FavouriteMoviesPage extends StatelessWidget {
   const FavouriteMoviesPage({super.key});
@@ -12,6 +12,11 @@ class FavouriteMoviesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Favourites')),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.abc),
+        onPressed: () {},
+      ),
       body: Consumer(
         builder: (context, ref, child) {
           final movies = ref.watch(favouriteMoviesProvider);

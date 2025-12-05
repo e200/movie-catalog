@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_catalog/movie/providers/shared_preferences.dart';
+import 'package:movie_catalog/movie/controllers/shared_preferences.dart';
 
 final themeModeProvider = StateNotifierProvider<ThemeModeProvider, bool>((ref) {
   return ThemeModeProvider(

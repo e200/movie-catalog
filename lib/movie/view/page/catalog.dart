@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_catalog/movie/components/list.dart';
-import 'package:movie_catalog/movie/model.dart';
-import 'package:movie_catalog/movie/providers/movie_catalog.dart';
-import 'package:movie_catalog/movie/providers/theme_mode.dart';
+import 'package:movie_catalog/movie/view/components/list.dart';
+import 'package:movie_catalog/movie/model/movie.dart';
+import 'package:movie_catalog/movie/controllers/banned_movie.dart';
+import 'package:movie_catalog/movie/controllers/movie_catalog.dart';
+import 'package:movie_catalog/movie/controllers/theme_mode.dart';
 import 'package:movie_catalog/movie/repository.dart';
 
 class MovieCatalogPage extends ConsumerStatefulWidget {
@@ -22,7 +23,7 @@ class _MovieCatalogPageState extends ConsumerState<MovieCatalogPage> {
       });
     }); */
 
-    ref.read(MovieCatalogNotifier.provider.notifier).fetchAllByCategory();
+    ref.read(MovieCatalogController.provider.notifier).fetchAllByCategory();
 
     super.initState();
   }
@@ -45,7 +46,7 @@ class _MovieCatalogPageState extends ConsumerState<MovieCatalogPage> {
       body: Consumer(
         builder: (context, ref, _) {
           return ref
-              .watch(MovieCatalogNotifier.provider)
+              .watch(MovieCatalogController.provider)
               .when(
                 data: (data) {
                   return SingleChildScrollView(
@@ -54,7 +55,14 @@ class _MovieCatalogPageState extends ConsumerState<MovieCatalogPage> {
                       child: Wrap(
                         runSpacing: 15,
                         children: data.keys.map((key) {
-                          return MovieList(title: key, movies: data[key]!);
+                          return MovieList(
+                            title: key,
+                            movies: data[key]!.where((element) {
+                              return !ref
+                                  .watch(bannedMovieProvider)
+                                  .contains(element.id);
+                            }).toList(),
+                          );
                         }).toList(),
                       ),
                     ),

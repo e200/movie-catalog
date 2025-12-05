@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:movie_catalog/movie/model.dart';
+import 'package:movie_catalog/movie/model/movie.dart';
 import 'package:movie_catalog/movie/repository.dart';
 
 void main() {

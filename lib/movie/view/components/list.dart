@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_catalog/movie/components/card.dart';
-import 'package:movie_catalog/movie/model.dart';
-import 'package:movie_catalog/movie/page/details.dart';
+import 'package:movie_catalog/movie/view/components/card.dart';
+import 'package:movie_catalog/movie/model/movie.dart';
+import 'package:movie_catalog/movie/view/page/details.dart';
 
 class MovieList extends StatelessWidget {
   final String title;

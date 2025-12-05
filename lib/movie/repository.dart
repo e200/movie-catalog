@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:movie_catalog/movie/model.dart';
+import 'package:movie_catalog/movie/model/movie.dart';
 import 'package:http/http.dart' as http;
 
 class MovieRepository {

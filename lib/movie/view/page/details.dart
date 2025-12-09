@@ -2,8 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_catalog/movie/model/movie.dart';
-import 'package:movie_catalog/movie/controllers/banned_movie.dart';
-import 'package:movie_catalog/movie/controllers/shared_preferences.dart';
 
 class MovieDetailsPage extends StatelessWidget {
   final Movie movie;
@@ -18,17 +16,6 @@ class MovieDetailsPage extends StatelessWidget {
         builder: (context, ref, child) {
           return FloatingActionButton(
             onPressed: () {
-              final bannedMoviesList = [
-                ...ref.read(bannedMovieProvider),
-                movie.id,
-              ];
-
-              ref
-                  .read(sharedPreferencesProvider)
-                  .setStringList('banned_movies', bannedMoviesList);
-
-              ref.read(bannedMovieProvider.notifier).state = bannedMoviesList;
-
               /*  final movies = ref.read(favouriteMoviesProvider.notifier).state;
         
             if (movies.contains(movie)) {

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_catalog/movie/view/components/list.dart';
-import 'package:movie_catalog/movie/model/movie.dart';
-import 'package:movie_catalog/movie/controllers/banned_movie.dart';
 import 'package:movie_catalog/movie/controllers/movie_catalog.dart';
 import 'package:movie_catalog/movie/controllers/theme_mode.dart';
-import 'package:movie_catalog/movie/repository.dart';
 
 class MovieCatalogPage extends ConsumerStatefulWidget {
   const MovieCatalogPage({super.key});
@@ -49,30 +46,25 @@ class _MovieCatalogPageState extends ConsumerState<MovieCatalogPage> {
               .watch(MovieCatalogController.provider)
               .when(
                 data: (data) {
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 16),
-                      child: Wrap(
-                        runSpacing: 15,
-                        children: data.keys.map((key) {
-                          return MovieList(
-                            title: key,
-                            movies: data[key]!.where((element) {
-                              return !ref
-                                  .watch(bannedMovieProvider)
-                                  .contains(element.id);
-                            }).toList(),
-                          );
-                        }).toList(),
-                      ),
-                    ),
+                  final categoryNames = data.keys.toList();
+
+                  return ListView.builder(
+                    itemCount: categoryNames.length,
+                    itemBuilder: (context, index) {
+                      final categoryName = categoryNames[index];
+
+                      return MovieList(
+                        title: categoryName,
+                        movies: data[categoryName]!
+                      );
+                    },
                   );
                 },
                 error: (error, stackTrace) {
                   return Text(error.toString());
                 },
                 loading: () {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 },
               );
         },
